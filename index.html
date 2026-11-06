@@ -1,111 +1,693 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Under Maintenance</title>
-
-<style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Arial, sans-serif;
-    background: #ffffff;
-  }
-
-  .wrapper {
-    text-align: center;
-    max-width: 600px;
-    padding: 20px;
-  }
-
-  /* Responsive SVG scaling */
-  img.main {
-    width: min(80vw, 420px);
-    height: auto;
-    margin-bottom: 30px;
-  }
-
-  .small-title {
-    letter-spacing: 2px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #555;
-  }
-
-  h1 {
-    margin: 10px 0;
-    font-size: 32px;
-  }
-
-  p {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .contact {
-    margin-top: 10px;
-  }
-
-  .contact a {
-    color: #000;
-    text-decoration: none;
-  }
-
-  .social {
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  .social img {
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-
-  .social img:hover {
-    transform: scale(1.15);
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Coding Mantis Games — An indie game studio creating co-op and shared-screen experiences. Makers of Wheel You Drive?">
+  <meta property="og:title" content="Coding Mantis Games">
+  <meta property="og:description" content="We build co-op and shared-screen games that bring people together through fun, chaos, and connection.">
+  <meta property="og:image" content="assets/games/WheelYouDrive_hero.png">
+  <title>Coding Mantis Games</title>
+  <link rel="icon" href="assets/company-logo/Logo_Symbol_Black.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <div class="wrapper">
-    <img src="maintenance.svg" alt="Maintenance" class="main">
 
-    <div class="small-title">WE ARE COMING SOON</div>
-    <h1>The website under maintenance!</h1>
+<!-- ============================================================
+     MOBILE MENU (off-canvas)
+     ============================================================ -->
+<nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation">
+  <button id="mobile-close" class="nav-btn" style="margin-bottom: var(--space-5);" aria-label="Close menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <path d="M5 5l14 14M19 5L5 19"/>
+    </svg>
+  </button>
+  <div id="mobile-nav"></div>
+  <div class="mobile-social" style="margin-top: var(--space-7);">
+    <p style="margin:0 0 12px; font: 800 var(--text-body-sm)/1 var(--font-heading); color: var(--mantis-paper);">Follow us on</p>
+    <nav class="social-links" id="mobile-socials" aria-label="Social media"></nav>
+  </div>
+</nav>
 
-    <p>
-      Our website is being updated. We’re working behind the scenes and will be back shortly.
-    </p>
+<!-- ============================================================
+     PAGE FRAME
+     ============================================================ -->
+<div class="page-frame">
 
-    <div class="contact">
-      Contact us:
-      <a href="mailto:codingmantisgames@gmail.com">
-        codingmantisgames@gmail.com
-      </a>
-    </div>
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site-header transparent" role="banner">
+    <a href="#home" class="header-logo" aria-label="Coding Mantis Games home" id="logo-link">
+      <img src="assets/company-logo/Logo_Horizontal_Black.svg" alt="Coding Mantis Games" class="logo-ink">
+      <img src="assets/company-logo/Logo_Horizontal_White.svg" alt="" aria-hidden="true" class="logo-paper">
+    </a>
 
-    <div class="social">
-      <a href="https://www.instagram.com/codingmantisgames/" target="_blank">
-        <img src="icons/instagram.svg" alt="Instagram">
-      </a>
+    <nav class="header-nav-primary" aria-label="Primary navigation">
+      <button id="btn-games-menu" class="nav-btn" type="button" aria-expanded="false" aria-haspopup="true">
+        Games <span class="nav-caret" aria-hidden="true"></span>
+      </button>
+    </nav>
 
-      <a href="https://www.youtube.com/@codingmantisgames" target="_blank">
-        <img src="icons/youtube.svg" alt="YouTube">
-      </a>
+    <nav class="header-nav-secondary" aria-label="Secondary navigation">
+      <button id="btn-site-menu" class="nav-btn" type="button" aria-expanded="false" aria-haspopup="true">
+        Menu <span class="nav-caret" aria-hidden="true"></span>
+      </button>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
 
-      <a href="https://www.linkedin.com/company/coding-mantis/" target="_blank">
-        <img src="icons/linkedin.svg" alt="LinkedIn">
-      </a>
+    <!-- Mobile hamburger -->
+    <button id="hamburger" class="hamburger" type="button" aria-label="Open menu" style="color: inherit;">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- GAMES MEGA MENU -->
+  <div id="mega-menu-games" class="mega-menu mega-menu-games" aria-label="Games menu">
+    <div class="inner">
+      <div id="games-menu-grid" style="display: contents;"></div>
     </div>
   </div>
+
+  <!-- SITE MEGA MENU -->
+  <div id="mega-menu-site" class="mega-menu mega-menu-site" aria-label="Site menu" data-accent="friends">
+    <div class="inner">
+      <div class="menu-divider" aria-hidden="true"></div>
+      <div class="menu-columns" id="menu-cols"></div>
+      <div class="menu-socials">
+        <nav class="social-links" id="menu-socials" aria-label="Social media"></nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN CONTENT — PAGES
+       ============================================================ -->
+
+  <!-- ============ HOME PAGE ============ -->
+  <div id="page-home" class="page visible">
+    <main>
+
+      <!-- HERO -->
+      <section data-accent="friends" aria-labelledby="hero-title" class="hero">
+        <!-- Decorative elements -->
+        <div class="hero-decor-tl" aria-hidden="true"></div>
+        <div class="hero-decor-br" aria-hidden="true"></div>
+        <div class="hero-decor-stripe" aria-hidden="true"></div>
+        <div class="hero-decor-dots" aria-hidden="true"></div>
+        <img src="assets/company-logo/Logo_Symbol_Black.svg" alt="" aria-hidden="true" class="hero-bg-symbol">
+
+        <div class="hero-content reveal">
+          <h1 id="hero-title" class="hero-title">
+            <span style="white-space:nowrap;">Coding Mantis</span><br>
+            <span class="accent">Games</span>
+          </h1>
+          <p class="hero-lead">We build co-op and shared-screen games that bring people together through fun, chaos, and connection.</p>
+          <a href="#games" class="btn btn-accent btn-lg" id="hero-games-btn">Games</a>
+        </div>
+      </section>
+
+      <!-- WHO ARE WE -->
+      <section id="about" data-accent="friends" aria-labelledby="about-title" class="who-are-we">
+        <div class="inner">
+          <div class="reveal">
+            <h2 id="about-title">Who Are We</h2>
+            <p>We are Coding Mantis Games — an indie studio focused on creating co-op and shared-screen experiences designed to be played together.</p>
+            <p>We believe games are at their best when they create fun, chaos, competition, and memorable moments shared with friends and family.</p>
+            <div class="btn-row">
+              <a href="#game" class="btn btn-friends">View Our Games</a>
+              <a href="#contact" class="btn btn-outline">Work With Us</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUR GAMES -->
+      <section id="games" data-accent="friends" aria-labelledby="home-games-title" class="home-games">
+        <div class="game-bg">
+          <img id="home-game-bg-img" src="assets/games/WheelYouDrive_hero.png" alt="">
+        </div>
+        <div class="scrim-x" aria-hidden="true"></div>
+        <h2 id="home-games-title" class="games-label">Our Games</h2>
+        <a href="#game" id="games-full-link" style="position:absolute;inset:0;z-index:0;" aria-label="Open the featured game page"></a>
+        <div class="game-info">
+          <div class="game-info-inner">
+            <h3 id="home-game-name" class="game-name">Wheel You Drive?</h3>
+            <p id="home-game-desc" class="game-desc">Grab a friend and take control of the same RC car in this chaotic 2-player co-op game!</p>
+            <div id="home-game-btns" class="game-btns" style="position:relative;z-index:1;"></div>
+          </div>
+        </div>
+        <!-- Carousel controls (only visible with multiple games) -->
+        <button id="carousel-prev" class="carousel-btn prev" type="button" aria-label="Previous game" style="display:none;">
+          <img src="assets/ui/carousel-arrow-white.png" alt="">
+        </button>
+        <button id="carousel-next" class="carousel-btn next" type="button" aria-label="Next game" style="display:none;">
+          <img src="assets/ui/carousel-arrow-white.png" alt="">
+        </button>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" data-accent="friends" aria-labelledby="home-contact-title" class="contact-section">
+        <div class="section-heading reveal">
+          <span class="kicker">Let's make something fun</span>
+          <h2 id="home-contact-title" style="margin:0 0 var(--space-3);font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Get In Touch</h2>
+          <p class="section-lead">Have a game idea, a project, or just want to say hello? Tell us a little about it and we'll get back to you.</p>
+        </div>
+        <form id="contact-form-home" class="form-wrapper" novalidate>
+          <div class="form-field reveal">
+            <label for="home-name">Full Name <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="home-name" name="full-name" type="text" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-field reveal reveal-delay-1">
+            <label for="home-email">Email <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="home-email" name="email" type="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-field reveal reveal-delay-2">
+            <label for="home-subject">Subject <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <select id="home-subject" name="subject" required></select>
+          </div>
+          <div class="form-field reveal reveal-delay-3">
+            <label for="home-message">Write a Message</label>
+            <textarea id="home-message" name="message" rows="5" placeholder="Enter text here"></textarea>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);" class="reveal">
+            <div id="contact-error-home" class="form-error" aria-live="polite"><p>Please fill in all required fields.</p></div>
+            <div id="contact-success-home" class="form-success" aria-live="polite">
+              <p>Thanks! We'll get back to you soon.</p>
+            </div>
+            <button type="submit" class="btn btn-friends">Send</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- CAREERS CTA BAND -->
+      <section aria-labelledby="home-careers-title" class="careers-band">
+        <h2 id="home-careers-title">Interested in Working With Us?</h2>
+        <a href="#careers" class="btn btn-paper btn-md">See All Positions</a>
+      </section>
+
+    </main>
+  </div><!-- /page-home -->
+
+
+  <!-- ============ GAME PAGE — WHEEL YOU DRIVE? ============ -->
+  <div id="page-game" class="page">
+    <main data-accent="family">
+
+      <!-- GAME HERO -->
+      <section aria-labelledby="game-title" class="game-hero">
+        <img src="assets/games/WheelYouDrive_hero.png" alt="Wheel You Drive? key art" class="hero-art">
+        <div class="hero-scrim" aria-hidden="true"></div>
+        <div class="hero-overlay">
+          <div class="hero-copy">
+            <span class="kicker tone-family" style="margin-bottom:var(--space-3);display:inline-flex;">Now delivering chaos</span>
+            <h1 id="game-title">Wheel You Drive?</h1>
+            <p>Grab a friend and take control of the same RC car in this chaotic 2-player co-op game! Each player controls a different part of the car, so you'll need to communicate, coordinate your movement, and make it through every obstacle together.</p>
+            <a href="https://store.steampowered.com/app/5245830/Wheel_You_Drive/" target="_blank" rel="noopener noreferrer" class="btn btn-paper btn-md">Wishlist on Steam</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- GAME INTRO -->
+      <section class="game-intro">
+        <div class="section-heading reveal">
+          <span class="kicker">A shared RC-car adventure</span>
+          <h2 style="margin:0 0 var(--space-3);font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Two Players. One RC Car.</h2>
+          <p class="section-lead">Each player controls a different part of the car, so you'll need to communicate, coordinate your movements, and work together to get through every obstacle.</p>
+        </div>
+      </section>
+
+      <!-- TRAILER -->
+      <section class="game-trailer" aria-labelledby="trailer-title">
+        <div class="section-heading reveal">
+          <span class="kicker">Watch</span>
+          <h2 id="trailer-title" style="margin:0;font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Official Trailer</h2>
+        </div>
+        <div class="video-frame reveal" id="trailer-frame">
+          <div class="video-placeholder" id="trailer-placeholder">
+            <img src="assets/games/WheelYouDrive_hero.png" alt="Wheel You Drive? trailer thumbnail">
+            <div class="video-play-btn" aria-hidden="true">▶</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AWARDS & SELECTIONS -->
+      <section class="game-awards" aria-labelledby="awards-title">
+        <div class="section-heading reveal">
+          <span class="kicker">Recognition</span>
+          <h2 id="awards-title" style="margin:0;font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Awards &amp; Selections</h2>
+        </div>
+        <div class="awards-grid reveal">
+          <figure class="award-badge">
+            <img src="assets/badges/IGDC-2026-Indie-60-Selection.png" alt="IGDC 2026 Indie 60 Official Selection">
+          </figure>
+          <figure class="award-badge">
+            <img src="assets/badges/IGDC-2026-Upcoming-Game-of-the-Year-Nominee.png" alt="IGDC 2026 Upcoming Game of the Year Nominee">
+          </figure>
+        </div>
+      </section>
+
+      <!-- SCREENSHOTS -->
+      <section class="game-screenshots" aria-labelledby="screenshots-title">
+        <div class="section-heading reveal">
+          <span class="kicker">Take a look</span>
+          <h2 id="screenshots-title" style="margin:0;font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">In the Game</h2>
+        </div>
+        <div class="screenshots-grid" id="game-screenshots-grid"></div>
+      </section>
+
+      <!-- CTA BAND -->
+      <section class="cta-band" data-accent="family">
+        <div class="reveal">
+          <h2 style="margin:0 0 var(--space-3);">Want to feature Wheel You Drive?</h2>
+          <p>Find screenshots, the trailer, key art, logos, and all the information you need in our game press kit.</p>
+          <div style="margin-top:var(--space-5);">
+            <a href="#gamekit" class="btn btn-family">View Press Kit</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /page-game -->
+
+
+  <!-- ============ PRESS KIT PAGE ============ -->
+  <div id="page-press" class="page">
+    <main data-accent="family">
+
+      <!-- PRESS KIT HERO -->
+      <section aria-labelledby="presskit-title" class="presskit-hero">
+        <div class="decor-tl" aria-hidden="true"></div>
+        <div class="decor-dots" aria-hidden="true"></div>
+        <div class="decor-br" aria-hidden="true"></div>
+        <div class="inner reveal">
+          <span class="kicker tone-muted" style="display:inline-flex;margin-bottom:var(--space-3);">Coding Mantis Games</span>
+          <h1 id="presskit-title">Press Kit</h1>
+          <p>Welcome to the official Coding Mantis Games press kit.</p>
+          <p style="color:var(--text-muted);">We support content creators, streamers, journalists, and media outlets who want to showcase our games and projects. Feel free to create videos, streams, reviews, and other content — no additional permission required.</p>
+          <p style="color:var(--text-muted);">If you share content online, feel free to tag us or send us a link — we'd love to support and share your work.</p>
+          <p style="color:var(--text-muted);margin-bottom:var(--space-8);">This page contains studio information, media assets, screenshots, trailers, and branding resources.</p>
+          <a href="#presskit-games" class="btn btn-family btn-lg">View Games</a>
+        </div>
+      </section>
+
+      <!-- STUDIO DETAILS -->
+      <section class="presskit-details" data-accent="family" aria-labelledby="studio-details-title">
+        <!-- Logo selector -->
+        <div class="reveal">
+          <div class="logo-stage" id="logo-stage-wrap">
+            <img id="logo-stage-img" src="assets/company-logo/Logo_Horizontal_Black.svg" alt="Horizontal black logo">
+            <a id="logo-dl-btn" href="assets/company-logo/Logo_Horizontal_Black.svg" download="CodingMantisGames_Horizontal_Black.svg" class="logo-dl-btn" aria-label="Download selected logo">
+              <span aria-hidden="true" style="font-size:13px;line-height:1;">↓</span> SVG
+            </a>
+          </div>
+          <p id="logo-stage-name" style="margin:var(--space-4) 0 0;font:500 var(--text-body-sm)/1.3 var(--font-heading);color:var(--text-muted);text-align:center;">Horizontal black logo</p>
+          <div class="logo-picker" id="logo-picker"></div>
+        </div>
+
+        <!-- Studio info -->
+        <div class="studio-facts reveal reveal-delay-1">
+          <span class="kicker tone-muted" style="display:inline-flex;margin-bottom:var(--space-4);">Studio information</span>
+          <h2 id="studio-details-title">Coding Mantis Games</h2>
+          <p>We are an indie game studio creating co-op and shared-screen experiences designed to bring people together through fun, chaos, and connection.</p>
+          <ul class="quick-facts" id="studio-facts-list"></ul>
+        </div>
+      </section>
+
+      <!-- PRESS KIT GAMES -->
+      <section id="presskit-games" class="presskit-games-section" data-accent="family" aria-labelledby="pk-games-title">
+        <div class="section-heading reveal">
+          <h2 id="pk-games-title" style="margin:0;font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Games</h2>
+        </div>
+        <div class="presskit-games-grid">
+          <a href="#gamekit" class="game-card reveal">
+            <img src="assets/games/WheelYouDrive_hero.png" alt="Wheel You Drive?" class="card-art">
+            <div class="card-scrim"></div>
+            <div class="card-content">
+              <h3 class="card-title">Wheel You Drive?</h3>
+              <p class="card-sub">Co-op adventure</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- CREATOR PROGRAM -->
+      <section class="creator-program" data-accent="family" aria-labelledby="creator-title">
+        <div class="inner reveal">
+          <h2 id="creator-title">Join Our Creator Program</h2>
+          <p>Love creating content around indie games?</p>
+          <p><a href="#press-contact" id="creator-form-link" style="color:var(--accent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;">Fill out this form</a> to get early access to upcoming builds, test new gameplay features, and collaborate with Coding Mantis Games in promoting our projects.</p>
+        </div>
+      </section>
+
+      <!-- PRESS CONTACT FORM -->
+      <section id="press-contact" class="press-contact" data-accent="family" aria-labelledby="press-contact-title">
+        <div class="section-heading reveal">
+          <span class="kicker">Creator &amp; media enquiries</span>
+          <h2 id="press-contact-title" style="margin:0 0 var(--space-3);font:800 var(--text-h2)/1.04 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Get In Touch</h2>
+          <p class="section-lead">Tell us about your channel, project, or idea and we'll get back to you.</p>
+        </div>
+        <form id="press-contact-form" style="display:grid;gap:var(--space-5);max-width:var(--width-form);margin:0 auto;" novalidate>
+          <div class="form-field reveal">
+            <label for="press-name">Full Name <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="press-name" name="press-full-name" type="text" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-field reveal reveal-delay-1">
+            <label for="press-email">Email <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="press-email" name="press-email" type="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-field reveal reveal-delay-2">
+            <label for="press-subject">Subject <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <select id="press-subject" name="subject" required></select>
+          </div>
+          <div class="form-field reveal reveal-delay-3">
+            <label for="press-message">Write a Message</label>
+            <textarea id="press-message" name="press-message" rows="5" placeholder="Enter text here"></textarea>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);" class="reveal">
+            <div id="press-contact-error" class="form-error" aria-live="polite"><p>Please fill in all required fields.</p></div>
+            <div id="press-contact-success" class="form-success" aria-live="polite">
+              <p>Thanks! We'll get back to you soon.</p>
+            </div>
+            <button type="submit" class="btn btn-family">Send</button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+  </div><!-- /page-press -->
+
+
+  <!-- ============ GAME PRESS KIT ============ -->
+  <div id="page-gamekit" class="page">
+    <main data-accent="good-times">
+
+      <!-- BANNER -->
+      <section aria-labelledby="game-kit-title" class="game-kit-banner">
+        <div class="banner-bg">
+          <img src="assets/games/WheelYouDrive_presskit-banner.png.png" alt="">
+          <div class="banner-scrim-y" aria-hidden="true"></div>
+          <div class="banner-scrim-top" aria-hidden="true"></div>
+        </div>
+        <div class="banner-content">
+          <h1 id="game-kit-title">Wheel You Drive?</h1>
+          <span class="tag accent" style="align-self:flex-start;">Co-Op</span>
+        </div>
+      </section>
+
+      <!-- BODY -->
+      <div class="game-kit-body">
+        <div class="game-kit-inner">
+
+          <!-- MAIN -->
+          <div class="game-kit-main">
+
+            <!-- Steam Widget -->
+            <div class="steam-widget reveal">
+              <iframe src="https://store.steampowered.com/widget/5245830/" frameborder="0" width="646" height="190"></iframe>
+            </div>
+
+            <!-- About the game -->
+            <section class="about-game reveal">
+              <h2>About the Game</h2>
+              <span class="about-tag">Can You Drive Together?</span>
+              <div id="about-game-blocks"></div>
+              <button type="button" id="about-toggle" class="toggle-btn">Show more</button>
+            </section>
+
+            <!-- Assets -->
+            <section aria-labelledby="game-assets-title" class="reveal">
+              <h2 id="game-assets-title" style="margin:0 0 var(--space-5);font:800 var(--text-h3)/1.06 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Assets</h2>
+              <div id="asset-tab-bar" class="tab-bar"></div>
+              <div id="asset-content"></div>
+            </section>
+
+          </div>
+
+          <!-- ASIDE -->
+          <aside class="game-kit-aside reveal">
+            <img src="assets/games/WheelYouDrive_cover.png.png" alt="Wheel You Drive? cover art" class="cover-art">
+
+            <section>
+              <h2 style="margin:0 0 var(--space-4);font:800 var(--text-h4)/1.1 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Quick Facts</h2>
+              <ul class="quick-facts" id="game-facts-list"></ul>
+            </section>
+
+            <section style="padding-top:var(--space-5);border-top:1px solid var(--border-card);">
+              <h2 style="margin:0 0 var(--space-4);font:800 var(--text-h4)/1.1 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Contact</h2>
+              <p style="margin:0 0 6px;font:500 var(--text-micro)/1.3 var(--font-heading);letter-spacing:var(--tracking-kicker);text-transform:uppercase;color:var(--text-muted);">Press enquiries &amp; business</p>
+              <a href="mailto:studio@codingmantisgames.com" style="font:700 var(--text-body)/1.35 var(--font-heading);color:var(--text-strong);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px;overflow-wrap:anywhere;">studio@codingmantisgames.com</a>
+            </section>
+
+            <section style="padding-top:var(--space-5);border-top:1px solid var(--border-card);">
+              <h2 style="margin:0 0 var(--space-4);font:800 var(--text-h4)/1.1 var(--font-headline);letter-spacing:var(--tracking-display);text-transform:uppercase;color:var(--text-strong);">Links</h2>
+              <a href="https://store.steampowered.com/app/5245830/Wheel_You_Drive/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:11px;font:700 var(--text-body)/1.35 var(--font-heading);color:var(--text-strong);text-decoration:none;">
+                <img src="assets/icons/steam.png" alt="" style="width:19px;height:19px;object-fit:contain;filter:brightness(0);">Steam
+              </a>
+            </section>
+
+            <section style="padding-top:var(--space-5);border-top:1px solid var(--border-card);">
+              <p style="margin:0 0 var(--space-3);font:500 var(--text-micro)/1.3 var(--font-heading);letter-spacing:var(--tracking-kicker);text-transform:uppercase;color:var(--text-muted);">Available assets</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px 20px;font:700 var(--text-body-sm)/1.3 var(--font-heading);color:var(--text-body);">
+                <span>6 Screenshots</span><span>1 Video</span><span>1 Key Art</span>
+              </div>
+            </section>
+          </aside>
+
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /page-gamekit -->
+
+
+  <!-- ============ CAREERS PAGE ============ -->
+  <div id="page-careers" class="page">
+    <main data-accent="couples">
+
+      <!-- HERO -->
+      <section aria-labelledby="careers-title" class="careers-hero">
+        <div class="careers-hero-inner reveal">
+          <span class="kicker" style="display:inline-flex;">Join our studio</span>
+          <h1 id="careers-title">Careers</h1>
+          <p style="margin:0;max-width:620px;font:400 clamp(15px,1.3vw,18px)/1.5 var(--font-body);color:var(--text-body);text-wrap:pretty;">At Coding Mantis Games, we create social and co-op experiences designed to bring people together through fun, chaos, and memorable gameplay moments.</p>
+          <p style="margin:0;max-width:620px;font:400 clamp(15px,1.3vw,18px)/1.5 var(--font-body);color:var(--text-muted);text-wrap:pretty;">We're always interested in connecting with passionate developers, artists, designers, and creators who love building interactive experiences.</p>
+          <div style="margin-top:var(--space-3);">
+            <a href="#apply" class="btn btn-couples">Get In Touch</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPLY SECTION -->
+      <section id="apply" class="careers-apply" aria-labelledby="apply-title">
+        <div class="left reveal">
+          <span class="kicker" style="display:inline-flex;margin-bottom:var(--space-4);">Opportunities</span>
+          <h2 id="apply-title">Interested?<br>Then just apply here.</h2>
+          <p style="margin-top:var(--space-4);">We're looking forward to hearing from you. It's always exciting to receive thoughtful applications with more than just a blurry image of a cat. Although we do love cats.</p>
+        </div>
+
+        <form id="careers-form" style="display:grid;gap:var(--space-5);align-content:start;min-width:0;" novalidate>
+          <div class="form-field reveal">
+            <label for="applicant-name">Name <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="applicant-name" name="applicant-name" type="text" placeholder="Type here" required>
+          </div>
+          <div class="form-field reveal reveal-delay-1">
+            <label for="applicant-email">Email <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="applicant-email" name="applicant-email" type="email" placeholder="Type here" required>
+          </div>
+          <div class="form-field reveal reveal-delay-1">
+            <label for="applicant-phone">Phone</label>
+            <input id="applicant-phone" name="applicant-phone" type="tel" placeholder="Type here">
+          </div>
+          <div class="form-field reveal reveal-delay-2" style="display:grid;gap:6px;">
+            <label for="resume">
+              Résumé Link <span aria-hidden="true" style="color:var(--accent)">*</span>
+              <small style="display:block;margin-top:3px;font:400 10px/1.3 var(--font-body);color:var(--text-muted);">Paste a link to your résumé (Google Drive, Dropbox, etc.)</small>
+            </label>
+            <input id="resume" name="resume-link" type="url" placeholder="https://..." required>
+          </div>
+          <div class="form-field reveal reveal-delay-2">
+            <label for="portfolio">Link to portfolio or other site</label>
+            <input id="portfolio" name="portfolio" type="url" placeholder="Type here">
+          </div>
+          <div class="form-field reveal reveal-delay-3">
+            <label for="another-link">Another link</label>
+            <input id="another-link" name="another-link" type="url" placeholder="Type here">
+          </div>
+          <div class="form-field reveal reveal-delay-3" style="display:grid;gap:6px;">
+            <label for="application-letter">
+              Application Letter Link
+              <small style="display:block;margin-top:3px;font:400 10px/1.3 var(--font-body);color:var(--text-muted);">Paste a link to your cover letter (Google Drive, Dropbox, etc.)</small>
+            </label>
+            <input id="application-letter" name="application-letter-link" type="url" placeholder="https://...">
+          </div>
+          <div class="form-field reveal">
+            <label for="source">Where did you hear about this position? <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <select id="source" name="source" required>
+              <option value="" disabled selected>Choose an option</option>
+              <option>Website</option>
+              <option>Social media</option>
+              <option>Friend or colleague</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);" class="reveal">
+            <div id="careers-error" class="form-error" aria-live="polite"><p>Please fill in all required fields.</p></div>
+            <div id="careers-success" class="form-success" aria-live="polite">
+              <p>Thanks! Your application has been submitted.</p>
+            </div>
+            <button type="submit" class="btn btn-couples">Send Application</button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+  </div><!-- /page-careers -->
+
+
+  <!-- ============ CONTACT PAGE ============ -->
+  <div id="page-contact" class="page">
+    <main data-accent="friends">
+
+      <section class="contact-page" aria-labelledby="contact-page-title">
+        <div class="contact-page-header reveal">
+          <span class="kicker" style="display:inline-flex;">Start a conversation</span>
+          <h1 id="contact-page-title">Reach Out and Let's Create Together</h1>
+          <p style="margin:0;font:400 16px/1.5 var(--font-body);color:var(--text-body);">Have a game idea, project, or collaboration in mind? We'd love to hear from you.</p>
+        </div>
+
+        <form id="contact-form-page" class="contact-form-card reveal" novalidate>
+          <div class="form-field">
+            <label for="page-name">Full Name <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="page-name" name="contact-full-name" type="text" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-field">
+            <label for="page-email">Email <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <input id="page-email" name="contact-email" type="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-field">
+            <label for="page-subject">Subject <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <select id="page-subject" name="subject" required></select>
+          </div>
+          <div class="form-field">
+            <label for="page-message">Write a Message</label>
+            <textarea id="page-message" name="contact-message" rows="5" placeholder="Enter text here"></textarea>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+            <div id="contact-error-page" class="form-error" aria-live="polite"><p>Please fill in all required fields.</p></div>
+            <div id="contact-success-page" class="form-success" aria-live="polite">
+              <p>Thanks! We'll get back to you soon.</p>
+            </div>
+            <button type="submit" class="btn btn-friends">Send</button>
+          </div>
+        </form>
+
+        <div style="margin-top:var(--space-6);" class="reveal">
+          <nav class="social-links dark" id="contact-socials" aria-label="Social media"></nav>
+        </div>
+      </section>
+
+      <section class="book-meeting" aria-labelledby="meeting-title">
+        <div class="book-meeting-inner reveal">
+          <h2 id="meeting-title">Or Book a Meeting</h2>
+          <p style="margin:0;font:400 17px/1.5 var(--font-body);color:var(--text-body);text-wrap:pretty;">Want to discuss your project in more detail? We can explore ideas, refine goals, and find the best way to work together.</p>
+          <a href="https://calendly.com/codingmantisgames/projectconsultation" target="_blank" rel="noopener noreferrer" class="btn btn-friends">Book a 1:1 Meeting</a>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /page-contact -->
+
+
+  <!-- ============ PRIVACY POLICY ============ -->
+  <div id="page-privacy" class="page">
+    <main data-accent="family" class="privacy-page">
+      <header class="privacy-header reveal">
+        <span class="kicker tone-muted" style="display:inline-flex;">Coding Mantis Games</span>
+        <h1>Privacy Policy</h1>
+        <p class="date">Last updated: September 11, 2026</p>
+      </header>
+      <article class="privacy-article" id="privacy-article"></article>
+    </main>
+  </div><!-- /page-privacy -->
+
+
+  <!-- ============ 404 PAGE ============ -->
+  <div id="page-404" class="page">
+    <main data-accent="friends" class="page-404">
+      <section aria-labelledby="not-found-title" class="page-404-inner">
+        <span class="kicker" style="display:inline-flex;">Error 404</span>
+        <p class="error-num" aria-hidden="true">404</p>
+        <h1 id="not-found-title">This Page Took a Wrong Turn.</h1>
+        <p style="margin:0 auto var(--space-6);max-width:480px;font:400 17px/1.5 var(--font-body);color:var(--text-body);text-wrap:pretty;">It looks like this path does not lead to one of our games. Let's get you back to somewhere fun.</p>
+        <a href="#home" class="btn btn-friends">Back to Home</a>
+      </section>
+    </main>
+  </div><!-- /page-404 -->
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo" data-accent="friends">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-social-group">
+          <p>Follow us on</p>
+          <nav class="social-links" id="footer-socials" aria-label="Social media"></nav>
+        </div>
+        <nav class="footer-nav" id="footer-nav" aria-label="Footer navigation"></nav>
+        <div class="footer-address">
+          <address>SN406, Fortune Spaces,<br>TC No: 3918/15, Pattom Palace,<br>Thiruvananthapuram – 695004, Kerala</address>
+          <p>
+            <a href="mailto:studio@codingmantisgames.com">studio@codingmantisgames.com</a><br>
+            <a href="tel:+919061279095">+91 9061279095</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-right">
+        <img src="assets/company-logo/Logo_Vertical_White.svg" alt="Coding Mantis Games">
+        <p class="footer-copy">
+          © 2026 Coding Mantis Games<br>
+          <span style="color:var(--accent);">Coding Mantis Games (OPC) Private Limited</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-frame -->
+
+<!-- ============================================================
+     LIGHTBOX
+     ============================================================ -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Asset preview">
+  <div style="display:flex;align-items:center;justify-content:flex-end;">
+    <button type="button" id="lightbox-close" class="lightbox-close" aria-label="Close preview">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="lightbox-stage">
+    <button type="button" id="lightbox-prev" class="lightbox-nav-btn prev" aria-label="Previous asset">
+      <img src="assets/ui/carousel-arrow-white.png" alt="">
+    </button>
+    <img id="lightbox-img" src="" alt="" style="flex:1;min-width:0;max-width:100%;max-height:100%;margin:0 auto;object-fit:contain;">
+    <button type="button" id="lightbox-next" class="lightbox-nav-btn next" aria-label="Next asset">
+      <img src="assets/ui/carousel-arrow-white.png" alt="" style="transform:rotate(180deg);">
+    </button>
+  </div>
+  <div class="lightbox-footer">
+    <div class="lightbox-meta">
+      <h4 id="lightbox-label"></h4>
+      <p id="lightbox-meta"></p>
+    </div>
+    <a id="lightbox-dl" href="" download="" class="btn btn-accent btn-md" style="gap:9px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v12"/><path d="M6.5 10.5 12 16l5.5-5.5"/><path d="M4 20h16"/></svg>
+      Download
+    </a>
+  </div>
+  <div id="lightbox-thumbs" class="lightbox-thumbs"></div>
+</div>
+
+<script src="js/main.js"></script>
 </body>
 </html>
