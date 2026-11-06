@@ -498,7 +498,7 @@
       const playBtn = el('div', { className: 'video-play-btn', innerHTML: '▶' });
       placeholder.append(posterImg, playBtn);
       placeholder.addEventListener('click', () => {
-        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/iHG69JuavUg?autoplay=1" title="Wheel You Drive? trailer" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/s7fbn5qViWA?autoplay=1" title="Wheel You Drive? trailer" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
       });
       frame.appendChild(placeholder);
       content.appendChild(frame);
