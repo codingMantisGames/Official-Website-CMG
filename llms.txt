@@ -1,0 +1,39 @@
+# Coding Mantis Games
+
+> Indie game studio from Kerala, India, creating co-op and shared-screen experiences designed to be played together.
+
+Coding Mantis Games (OPC) Private Limited is an indie game studio based in Thiruvananthapuram, Kerala, India. The studio focuses on building co-op and shared-screen games that create fun, chaos, competition, and memorable moments for friends, couples, and families.
+
+## Our Game
+
+### Wheel You Drive?
+- **Genre:** Co-op, Casual, Indie, Adventure
+- **Platform:** PC (Steam)
+- **Release:** Q1 2027
+- **Players:** 2-player local co-op
+- **Description:** A chaotic 2-player co-op RC car game where both players share control of the same RC car — but each controls a different half. Player 1 handles front wheel steering, backward movement, and front wheel jump. Player 2 handles back wheel steering, forward movement, and back wheel jump. Players must communicate and coordinate every move to navigate obstacles and complete levels together.
+- **Steam:** https://store.steampowered.com/app/5245830/Wheel_You_Drive/
+- **itch.io:** https://codingmantisgames.itch.io/
+- **Awards:** IGDC 2026 Indie 60 Official Selection, IGDC 2026 Upcoming Game of the Year Nominee
+
+## Studio
+
+- **Full name:** Coding Mantis Games (OPC) Private Limited
+- **Location:** Thiruvananthapuram, Kerala, India
+- **Founded:** Active as of 2026
+- **Speciality:** Local co-op and shared-screen multiplayer games
+
+## Contact
+
+- **Press & Business:** studio@codingmantisgames.com
+- **Phone:** +91 9061279095
+- **Website:** https://codingmantisgames.com
+
+## Links
+
+- [Website](https://codingmantisgames.com)
+- [Steam Developer Page](https://store.steampowered.com/developer/cmg)
+- [itch.io](https://codingmantisgames.itch.io/)
+- [YouTube](https://www.youtube.com/@CodingMantisGames)
+- [LinkedIn](https://www.linkedin.com/company/coding-mantis-games)
+- [Discord](https://discord.gg/CodingMantisGames)
