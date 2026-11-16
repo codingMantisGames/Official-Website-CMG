@@ -2419,6 +2419,8 @@ button { font-family: var(--font-heading); }
     gap: 16px;
   }
 
+  #btn-site-menu { display: none; }
+
   .hamburger { display: flex; }
 
   .mobile-menu { display: block; }
