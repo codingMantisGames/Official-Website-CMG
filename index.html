@@ -645,6 +645,44 @@
     </main>
   </div><!-- /page-404 -->
 
+  <!-- ============================================================
+       GALLERY PAGE
+       ============================================================ -->
+  <div id="page-gallery" class="page">
+    <main data-accent="friends">
+      <section class="gallery-hero">
+        <div class="reveal">
+          <span class="kicker" style="display:inline-flex;">Out and about</span>
+          <h1 class="gallery-title">Gallery</h1>
+          <p class="gallery-lead">Expos, showcases, playtests and meetups. Here's where we've been, the people we've met, and everyone who grabbed a controller and gave our games a go.</p>
+        </div>
+      </section>
+      <section class="gallery-section">
+        <div id="gallery-filter-bar" class="gallery-filter-bar"></div>
+        <div id="gallery-grid" class="gallery-grid"></div>
+      </section>
+      <section class="gallery-cta reveal">
+        <h2 class="gallery-cta-title">Running an event?</h2>
+        <p class="gallery-cta-lead">We love bringing our games to showcases, festivals and meetups. Get in touch if you'd like us there.</p>
+        <a href="#contact" class="btn btn-friends gallery-cta-btn">Get in touch</a>
+      </section>
+    </main>
+  </div><!-- /page-gallery -->
+
+  <!-- Gallery Lightbox -->
+  <div id="gallery-lightbox" class="gallery-lightbox hidden" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <span id="lightbox-counter" class="lightbox-counter"></span>
+    <button id="lightbox-close-gallery" class="lightbox-close-gallery" aria-label="Close">&#x2715;</button>
+    <div class="lightbox-img-wrap">
+      <img id="lightbox-img" src="" alt="" draggable="false">
+    </div>
+    <button id="lightbox-prev-gallery" class="lightbox-prev-gallery" aria-label="Previous photo">&#8249;</button>
+    <button id="lightbox-next-gallery" class="lightbox-next-gallery" aria-label="Next photo">&#8250;</button>
+    <div class="lightbox-caption">
+      <span id="lightbox-tag" class="lightbox-caption-tag"></span>
+      <span id="lightbox-text" class="lightbox-caption-text"></span>
+    </div>
+  </div>
 
   <!-- ============================================================
        FOOTER

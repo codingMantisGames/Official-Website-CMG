@@ -48,7 +48,8 @@
       title: 'Studio',
       links: [
         { label: 'Contact',  href: '#contact' },
-        { label: 'Careers',  href: '#careers' }
+        { label: 'Careers',  href: '#careers' },
+        { label: 'Gallery',  href: '#gallery' }
       ]
     },
     {
@@ -106,6 +107,23 @@
     { src: 'assets/games/Screenshots/WheelYouDrive_screenshot-5.jpg', alt: 'Screenshot 4' },
     { src: 'assets/games/Screenshots/WheelYouDrive_screenshot-6.jpg', alt: 'Screenshot 5' },
     { src: 'assets/games/Screenshots/WheelYouDrive_screenshot-7.jpg', alt: 'Screenshot 6' }
+  ];
+
+  const GALLERY_PHOTOS = [
+    { src: 'assets/gallery/IGDC 2026/G1793418879_826973090.jpg', tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/G1793419235_449910845.jpg', tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/G1793419239_421588980.jpg', tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/G1794809129_231706365.jpg', tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/G1794810421_629780741.jpg', tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/G1794811464_517075099.jpg', tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/photo (1).jpg',             tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/photo (4).jpg',             tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/photo(4).jpg',              tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/photo(7).jpg',              tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/photo(8).jpg',              tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/photo(9).jpg',              tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/Photo_1.png',               tag: 'IGDC 2026', caption: 'IGDC 2026' },
+    { src: 'assets/gallery/IGDC 2026/Photo_2.png',               tag: 'IGDC 2026', caption: 'IGDC 2026' },
   ];
 
   const ASSET_SETS = {
@@ -640,7 +658,7 @@
   const PAGE_ACCENT = {
     home: 'friends', game: 'family', press: 'family',
     gamekit: 'good-times', careers: 'couples',
-    contact: 'friends', privacy: 'family', '404': 'friends'
+    contact: 'friends', privacy: 'family', gallery: 'friends', '404': 'friends'
   };
 
   function updateMenuState() {
@@ -686,23 +704,40 @@
     if (!nav) return;
     nav.innerHTML = '';
 
-    const allLinks = [
-      { label: 'Home',         href: '#home' },
-      { label: 'Games',        href: '#game' },
-      { label: 'Press Kit',    href: '#press' },
-      { label: 'Careers',      href: '#careers' },
-      { label: 'Contact',      href: '#contact' },
-      { label: 'Privacy',      href: '#privacy' }
+    const sections = [
+      {
+        heading: 'Games',
+        links: GAMES.map(g => ({ label: g.name, href: g.href }))
+      },
+      {
+        heading: 'Studio',
+        links: [
+          { label: 'Contact',  href: '#contact' },
+          { label: 'Careers',  href: '#careers' },
+          { label: 'Gallery',  href: '#gallery' }
+        ]
+      },
+      {
+        heading: 'Resources',
+        links: [
+          { label: 'Press Kit',      href: '#press' },
+          { label: 'Privacy Policy', href: '#privacy' }
+        ]
+      }
     ];
 
-    allLinks.forEach(l => {
-      const a = el('a', { href: l.href, className: 'mobile-nav-link', textContent: l.label });
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        closeMobileMenu();
-        navigateTo(l.href.replace('#', ''));
+    sections.forEach(section => {
+      const heading = el('p', { className: 'mobile-nav-heading', textContent: section.heading });
+      nav.appendChild(heading);
+      section.links.forEach(l => {
+        const a = el('a', { href: l.href, className: 'mobile-nav-link', textContent: l.label });
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          closeMobileMenu();
+          navigateTo(l.href.replace('#', ''));
+        });
+        nav.appendChild(a);
       });
-      nav.appendChild(a);
     });
 
     const mSocials = $('#mobile-socials');
@@ -724,9 +759,133 @@
   }
 
   // ============================================================
+  // RENDER: GALLERY PAGE
+  // ============================================================
+  let galleryInitDone = false;
+  let galleryLightboxPhotos = [];
+  let galleryLightboxIndex = 0;
+
+  function renderGallery() {
+    if (galleryInitDone) return;
+    galleryInitDone = true;
+
+    const filterBar = document.getElementById('gallery-filter-bar');
+    const grid = document.getElementById('gallery-grid');
+    if (!filterBar || !grid) return;
+
+    // Build unique tag list
+    const tags = [];
+    GALLERY_PHOTOS.forEach(p => { if (!tags.includes(p.tag)) tags.push(p.tag); });
+
+    // Filter buttons with counts
+    filterBar.innerHTML = '';
+    const allBtn = el('button', { type: 'button', textContent: 'All (' + GALLERY_PHOTOS.length + ')', className: 'gallery-filter-btn active' });
+    allBtn.addEventListener('click', () => setGalleryFilter(null));
+    filterBar.appendChild(allBtn);
+    tags.forEach(tag => {
+      const count = GALLERY_PHOTOS.filter(p => p.tag === tag).length;
+      const btn = el('button', { type: 'button', textContent: tag + ' (' + count + ')', className: 'gallery-filter-btn' });
+      btn.dataset.tag = tag;
+      btn.addEventListener('click', () => setGalleryFilter(tag));
+      filterBar.appendChild(btn);
+    });
+
+    // Build grid items
+    grid.innerHTML = '';
+    GALLERY_PHOTOS.forEach((photo, i) => {
+      const item = el('div', { className: 'gallery-item', 'data-tag': photo.tag });
+      const img = el('img', { src: photo.src, alt: photo.caption, loading: 'lazy', draggable: 'false' });
+      const info = el('div', { className: 'gallery-item-info' });
+      info.innerHTML = `<span class="gallery-item-tag">${photo.tag}</span><span class="gallery-item-caption">${photo.caption}</span>`;
+      item.appendChild(img);
+      item.appendChild(info);
+      item.addEventListener('click', () => openGalleryLightbox(i));
+      item.addEventListener('contextmenu', e => e.preventDefault());
+      img.addEventListener('contextmenu', e => e.preventDefault());
+      grid.appendChild(item);
+    });
+
+    galleryLightboxPhotos = GALLERY_PHOTOS.slice();
+    setupGalleryLightbox();
+
+    const ctaBtn = document.querySelector('.gallery-cta-btn');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', (e) => { e.preventDefault(); navigateTo('contact'); });
+    }
+  }
+
+  function setGalleryFilter(tag) {
+    $$('.gallery-filter-btn').forEach(btn => {
+      btn.classList.toggle('active', tag === null ? !btn.dataset.tag : btn.dataset.tag === tag);
+    });
+    $$('.gallery-item').forEach(item => {
+      item.style.display = (!tag || item.dataset.tag === tag) ? '' : 'none';
+    });
+    galleryLightboxPhotos = tag ? GALLERY_PHOTOS.filter(p => p.tag === tag) : GALLERY_PHOTOS.slice();
+  }
+
+  function openGalleryLightbox(globalIndex) {
+    const activeBtnTag = document.querySelector('.gallery-filter-btn.active[data-tag]');
+    galleryLightboxPhotos = activeBtnTag
+      ? GALLERY_PHOTOS.filter(p => p.tag === activeBtnTag.dataset.tag)
+      : GALLERY_PHOTOS.slice();
+    const src = GALLERY_PHOTOS[globalIndex].src;
+    const idx = galleryLightboxPhotos.findIndex(p => p.src === src);
+    galleryLightboxIndex = idx >= 0 ? idx : 0;
+    updateGalleryLightboxPhoto();
+    document.getElementById('gallery-lightbox').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateGalleryLightboxPhoto() {
+    const photo = galleryLightboxPhotos[galleryLightboxIndex];
+    document.getElementById('lightbox-img').src = photo.src;
+    document.getElementById('lightbox-img').alt = photo.caption;
+    document.getElementById('lightbox-tag').textContent = photo.tag;
+    document.getElementById('lightbox-text').textContent = photo.caption;
+    document.getElementById('lightbox-counter').textContent =
+      (galleryLightboxIndex + 1) + ' / ' + galleryLightboxPhotos.length;
+  }
+
+  function closeGalleryLightbox() {
+    document.getElementById('gallery-lightbox').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function setupGalleryLightbox() {
+    const lb = document.getElementById('gallery-lightbox');
+    if (!lb || lb.dataset.ready) return;
+    lb.dataset.ready = '1';
+
+    document.getElementById('lightbox-close-gallery').addEventListener('click', closeGalleryLightbox);
+    document.getElementById('lightbox-prev-gallery').addEventListener('click', () => {
+      galleryLightboxIndex = (galleryLightboxIndex - 1 + galleryLightboxPhotos.length) % galleryLightboxPhotos.length;
+      updateGalleryLightboxPhoto();
+    });
+    document.getElementById('lightbox-next-gallery').addEventListener('click', () => {
+      galleryLightboxIndex = (galleryLightboxIndex + 1) % galleryLightboxPhotos.length;
+      updateGalleryLightboxPhoto();
+    });
+    lb.addEventListener('click', e => { if (e.target === lb) closeGalleryLightbox(); });
+    document.getElementById('lightbox-img').addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (lb.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeGalleryLightbox();
+      if (e.key === 'ArrowLeft') {
+        galleryLightboxIndex = (galleryLightboxIndex - 1 + galleryLightboxPhotos.length) % galleryLightboxPhotos.length;
+        updateGalleryLightboxPhoto();
+      }
+      if (e.key === 'ArrowRight') {
+        galleryLightboxIndex = (galleryLightboxIndex + 1) % galleryLightboxPhotos.length;
+        updateGalleryLightboxPhoto();
+      }
+    });
+  }
+
+  // ============================================================
   // PAGE ROUTING
   // ============================================================
-  const PAGES = ['home', 'game', 'press', 'gamekit', 'careers', 'contact', 'privacy', '404'];
+  const PAGES = ['home', 'game', 'press', 'gamekit', 'careers', 'contact', 'privacy', 'gallery', '404'];
   // Section anchors that live inside pages — not page routes, so don't 404 on them
   const SECTION_ANCHORS = new Set(['games', 'about', 'apply', 'press-contact', 'presskit-games', 'creator-form-link']);
 
@@ -770,6 +929,10 @@
       if (contactSocials && !contactSocials.hasChildNodes()) {
         renderSocialLinks(contactSocials, true);
       }
+    }
+
+    if (pageId === 'gallery') {
+      renderGallery();
     }
 
     // Trigger scroll reveals on new page
